@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 //common
 import Header from './components/common/Header';
@@ -21,12 +21,19 @@ import './scss/style.scss';
 function App() {
 	return (
 		<>
-			<Header />
+			{/* Switch 같은 경로의  router연결시 구체적인 라우터 하나만 적용한다. */}
+			<Switch>
+				<Route exact path='/'>
+					{/*  메인에만 적용되는  header */}
+					<Header type={'main'} />
+					<Visual />
+					<Content />
+				</Route>
 
-			<Route exact path='/'>
-				<Visual />
-				<Content />
-			</Route>
+				<Route path='/'>
+					<Header type={'sub'} />
+				</Route>
+			</Switch>
 
 			<Route path='/department' component={Department} />
 			<Route path='/youtube' component={Youtube} />
