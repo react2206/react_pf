@@ -21,30 +21,17 @@ function App() {
 		<>
 			<Header />
 
-			<Route path='/'>
+			<Route exact path='/'>
 				<Visual />
 				<Content />
 			</Route>
 
-			<Route path='/department'>
-				<Department />
-			</Route>
-
-			<Route path='/youtube'>
-				<Youtube />
-			</Route>
-			<Route path='/gallery'>
-				<Gallery />
-			</Route>
-			<Route path='/community'>
-				<Community />
-			</Route>
-			<Route path='/loaction'>
-				<Location />
-			</Route>
-			<Route path='/members'>
-				<Members />
-			</Route>
+			<Route path='/department' component={Department} />
+			<Route path='/youtube' component={Youtube} />
+			<Route path='/gallery' component={Gallery} />
+			<Route path='/community' component={Community} />
+			<Route path='/location' component={Location} />
+			<Route path='/members' component={Members} />
 
 			<Footer />
 		</>
