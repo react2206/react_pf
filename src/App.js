@@ -16,6 +16,8 @@ import Location from './components/sub/Location';
 import Members from './components/sub/Members';
 import Youtube from './components/sub/Youtube';
 
+import './scss/style.scss';
+
 function App() {
 	return (
 		<>
