@@ -5,6 +5,7 @@ import Popup from '../common/Popup';
 
 function Youtube() {
 	const [Vids, setVids] = useState([]);
+	const [Open, setOpen] = useState(false);
 
 	useEffect(() => {
 		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
@@ -32,7 +33,7 @@ function Youtube() {
 								<p>{desc.length > 200 ? desc.substr(0, 200) + '...' : desc}</p>
 								<span>{date.split('T')[0]}</span>
 							</div>
-							<div className='pic'>
+							<div className='pic' onClick={() => setOpen(true)}>
 								<img
 									src={vid.snippet.thumbnails.standard.url}
 									alt={vid.snippet.title}
@@ -43,7 +44,7 @@ function Youtube() {
 				})}
 			</Layout>
 
-			<Popup></Popup>
+			{Open && <Popup setOpen={setOpen}></Popup>}
 		</>
 	);
 }
