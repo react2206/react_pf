@@ -50,3 +50,43 @@
 		}
 	}
 }
+
+@media screen and (max-width: $tablet) {
+	.Youtube {
+		article {
+			h3 {
+				width: 47%;
+			}
+
+			.txt {
+				width: 50%;
+			}
+
+			.pic {
+				width: 100%;
+				margin-top: 50px;
+				margin-bottom: 80px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	.Youtube {
+		article {
+			h3 {
+				width: 100%;
+				margin-bottom: 20px;
+			}
+
+			.txt {
+				width: 100%;
+			}
+
+			.pic {
+				height: 120px;
+				margin-bottom: 0px;
+			}
+		}
+	}
+}
