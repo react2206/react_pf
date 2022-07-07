@@ -13,10 +13,6 @@ function Department() {
 		});
 	}, []);
 
-	useEffect(() => {
-		console.log(Members);
-	}, [Members]);
-
 	return (
 		<Layout name={'Department'}>
 			{Members.map((member, idx) => {
