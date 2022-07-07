@@ -6,6 +6,7 @@ import Popup from '../common/Popup';
 function Youtube() {
 	const [Vids, setVids] = useState([]);
 	const [Open, setOpen] = useState(false);
+	const [Index, setIndex] = useState(0);
 
 	useEffect(() => {
 		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
@@ -33,7 +34,12 @@ function Youtube() {
 								<p>{desc.length > 200 ? desc.substr(0, 200) + '...' : desc}</p>
 								<span>{date.split('T')[0]}</span>
 							</div>
-							<div className='pic' onClick={() => setOpen(true)}>
+							<div
+								className='pic'
+								onClick={() => {
+									setOpen(true);
+									setIndex(idx);
+								}}>
 								<img
 									src={vid.snippet.thumbnails.standard.url}
 									alt={vid.snippet.title}
@@ -44,7 +50,13 @@ function Youtube() {
 				})}
 			</Layout>
 
-			{Open && <Popup setOpen={setOpen}></Popup>}
+			{Open && (
+				<Popup setOpen={setOpen}>
+					<iframe
+						src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`}
+						frameborder='0'></iframe>
+				</Popup>
+			)}
 		</>
 	);
 }
