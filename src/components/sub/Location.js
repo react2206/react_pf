@@ -1,13 +1,10 @@
-import React from 'react';
+import Layout from '../common/Layout';
 
 function Location() {
 	return (
-		<section className='content location'>
-			<figure></figure>
-			<div className='inner'>
-				<h1>LOCATION</h1>
-			</div>
-		</section>
+		<Layout name={'Location'}>
+			<p>Location contents</p>
+		</Layout>
 	);
 }
 
