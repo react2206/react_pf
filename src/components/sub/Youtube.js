@@ -18,7 +18,23 @@ function Youtube() {
 
 	return (
 		<Layout name={'Youtube'}>
-			<p>Youtube Content</p>
+			{Vids.map((vid, idx) => {
+				return (
+					<article key={idx}>
+						<h3>{vid.snippet.title}</h3>
+						<div className='txt'>
+							<p>{vid.snippet.description}</p>
+							<span>{vid.snippet.publishedAt}</span>
+						</div>
+						<div className='pic'>
+							<img
+								src={vid.snippet.thumbnails.standard.url}
+								alt={vid.snippet.title}
+							/>
+						</div>
+					</article>
+				);
+			})}
 		</Layout>
 	);
 }
