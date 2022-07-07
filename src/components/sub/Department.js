@@ -19,7 +19,19 @@ function Department() {
 
 	return (
 		<Layout name={'Department'}>
-			<p>Department content</p>
+			{Members.map((member, idx) => {
+				return (
+					<article key={idx}>
+						<div className='inner'>
+							<div className='pic'>
+								<img src={`${path}/img/${member.pic}`} alt={member.name} />
+							</div>
+							<h3>{member.name}</h3>
+							<p>{member.position}</p>
+						</div>
+					</article>
+				);
+			})}
 		</Layout>
 	);
 }
