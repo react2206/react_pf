@@ -37,3 +37,37 @@
 		}
 	}
 }
+
+@media screen and (max-width: $tablet) {
+	.Department {
+		> .inner {
+			article {
+				width: 50%;
+				margin-bottom: 40px;
+
+				.inner {
+					.pic {
+						height: 260px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	.Department {
+		> .inner {
+			article {
+				width: 100%;
+				margin-bottom: 30px;
+
+				.inner {
+					.pic {
+						height: 200px;
+					}
+				}
+			}
+		}
+	}
+}
