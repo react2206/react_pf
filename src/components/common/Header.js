@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 function Header(props) {
 	const active = { color: 'aqua' };
 	return (
@@ -45,7 +45,7 @@ function Header(props) {
 						</NavLink>
 					</li>
 				</ul>
-				{/* <FontAwesomeIcon icon={faBars} /> */}
+				<FontAwesomeIcon icon={faBars} />
 			</div>
 		</header>
 	);
