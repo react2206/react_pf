@@ -1,13 +1,10 @@
-import React from 'react';
+import Layout from '../common/Layout';
 
 function Department() {
 	return (
-		<section className='content department'>
-			<figure></figure>
-			<div className='inner'>
-				<h1>DEPARTMENT</h1>
-			</div>
-		</section>
+		<Layout name={'Department'}>
+			<p>Department content</p>
+		</Layout>
 	);
 }
 
