@@ -19,12 +19,16 @@ function Youtube() {
 	return (
 		<Layout name={'Youtube'}>
 			{Vids.map((vid, idx) => {
+				const tit = vid.snippet.title;
+				const desc = vid.snippet.description;
+				const date = vid.snippet.publishedAt;
+
 				return (
 					<article key={idx}>
-						<h3>{vid.snippet.title}</h3>
+						<h3>{tit.length > 30 ? tit.substr(0, 30) + '...' : tit}</h3>
 						<div className='txt'>
-							<p>{vid.snippet.description}</p>
-							<span>{vid.snippet.publishedAt}</span>
+							<p>{desc.length > 200 ? desc.substr(0, 200) + '...' : desc}</p>
+							<span>{date.split('T')[0]}</span>
 						</div>
 						<div className='pic'>
 							<img
