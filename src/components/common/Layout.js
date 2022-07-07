@@ -1,6 +1,14 @@
+import { useEffect, useRef } from 'react';
+
 function Layout(props) {
+	const frame = useRef(null);
+
+	useEffect(() => {
+		frame.current.classList.add('on');
+	}, []);
+
 	return (
-		<section className={`content ${props.name}`}>
+		<section className={`content ${props.name}`} ref={frame}>
 			<figure></figure>
 			<div className='inner'>
 				<h1>{props.name}</h1>
