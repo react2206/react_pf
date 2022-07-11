@@ -38,6 +38,11 @@ function Header(props) {
 						</NavLink>
 					</li>
 					<li>
+						<NavLink to='/location2' activeStyle={active}>
+							Location2
+						</NavLink>
+					</li>
+					<li>
 						<NavLink to='/members' activeStyle={active}>
 							MemberShip
 						</NavLink>
