@@ -119,7 +119,7 @@ function Location() {
 					{Traffic ? 'Traffic OFF' : 'Traffic ON'}
 				</button>
 
-				<ul className='branch' ref={btns}>
+				<ul className='branch'>
 					{/* INfo의 갯수만큼 반복을 돌며 버튼 반복 출력 */}
 					{Info.map((info, idx) => {
 						let on = '';
