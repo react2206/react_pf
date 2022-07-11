@@ -77,22 +77,24 @@ function Location() {
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
-			<button onClick={() => setTraffic(!Traffic)}>
-				{Traffic ? 'Traffic OFF' : 'Traffic ON'}
-			</button>
+			<div className='btnSet'>
+				<button onClick={() => setTraffic(!Traffic)}>
+					{Traffic ? 'Traffic OFF' : 'Traffic ON'}
+				</button>
 
-			{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
-			<ul className='branch' ref={btns}>
-				{Info.map((info, idx) => {
-					let on = '';
-					Index === idx ? (on = 'on') : (on = '');
-					return (
-						<li key={idx} onClick={() => setIndex(idx)} className={on}>
-							{info.title}
-						</li>
-					);
-				})}
-			</ul>
+				{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
+				<ul className='branch' ref={btns}>
+					{Info.map((info, idx) => {
+						let on = '';
+						Index === idx ? (on = 'on') : (on = '');
+						return (
+							<li key={idx} onClick={() => setIndex(idx)} className={on}>
+								{info.title}
+							</li>
+						);
+					})}
+				</ul>
+			</div>
 		</Layout>
 	);
 }
