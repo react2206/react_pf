@@ -78,9 +78,13 @@ function Location() {
 
 			{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
 			<ul className='branch'>
-				<li onClick={() => setIndex(0)}>삼성동 코엑스</li>
-				<li onClick={() => setIndex(1)}>올림픽 공원</li>
-				<li onClick={() => setIndex(2)}>서울 시청</li>
+				{Info.map((info, idx) => {
+					return (
+						<li key={idx} onClick={() => setIndex(idx)}>
+							{info.title}
+						</li>
+					);
+				})}
 			</ul>
 		</Layout>
 	);
