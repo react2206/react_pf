@@ -3,20 +3,29 @@ import { useRef, useEffect, useState } from 'react';
 
 function Location() {
 	const { kakao } = window;
+	const info = [
+		{
+			title: '삼성동 코엑스',
+			latlng: new kakao.maps.LatLng(33.450701, 126.570667),
+			imgUrl: `${process.env.PUBLIC_URL}/img/marker1.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+	];
 	const container = useRef(null);
 	const [Location, setLocation] = useState(null);
-	//Traffic 토글 기능 구현을 위한 state추가
 	const [Traffic, setTraffic] = useState(false);
+	const [Info, setInfo] = useState(info);
 
 	const option = {
-		center: new kakao.maps.LatLng(33.450701, 126.570667),
+		center: Info[0].latlng,
 		level: 3,
 	};
 
-	const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-	const imageSrc = `${process.env.PUBLIC_URL}/img/marker1.png`;
-	const imageSize = new kakao.maps.Size(232, 99);
-	const imageOption = { offset: new kakao.maps.Point(116, 99) };
+	const markerPosition = Info[0].latlng;
+	const imageSrc = Info[0].imgUrl;
+	const imageSize = Info[0].imgSize;
+	const imageOption = Info[0].imgPos;
 
 	const markerImage = new kakao.maps.MarkerImage(
 		imageSrc,
@@ -35,9 +44,7 @@ function Location() {
 		setLocation(map_instance);
 	}, []);
 
-	//Traffic state값이 변경될때마다 실행될 구문
 	useEffect(() => {
-		//Location state값을 두번째 재호출 사이클부터 값이 담기므로 초기 오류방지를 위해 조건문 처리
 		if (!Location) return;
 		Traffic
 			? Location.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
@@ -47,9 +54,7 @@ function Location() {
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
-			{/* 버튼 클릭시 기존의 Traffic값을 반전처리 */}
 			<button onClick={() => setTraffic(!Traffic)}>
-				{/* Traffic값에 따라 버튼의 내용도 변경 */}
 				{Traffic ? 'Traffic OFF' : 'Traffic ON'}
 			</button>
 		</Layout>
