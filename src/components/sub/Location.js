@@ -6,26 +6,42 @@ function Location() {
 	const info = [
 		{
 			title: '삼성동 코엑스',
-			latlng: new kakao.maps.LatLng(33.450701, 126.570667),
+			latlng: new kakao.maps.LatLng(37.5127099887378, 127.06069983235905),
 			imgUrl: `${process.env.PUBLIC_URL}/img/marker1.png`,
 			imgSize: new kakao.maps.Size(232, 99),
-			imgPos: { offset: new kakao.maps.Point(116, 99) },
+			imgPos: { offset: new kakao.maps.Point(116, 90) },
+		},
+		{
+			title: '올림픽 공원',
+			latlng: new kakao.maps.LatLng(37.51881764760613, 127.11633054508519),
+			imgUrl: `${process.env.PUBLIC_URL}/img/marker2.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 90) },
+		},
+		{
+			title: '서울 시청',
+			latlng: new kakao.maps.LatLng(37.566918804166775, 126.97863525321908),
+			imgUrl: `${process.env.PUBLIC_URL}/img/marker3.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 90) },
 		},
 	];
 	const container = useRef(null);
 	const [Location, setLocation] = useState(null);
 	const [Traffic, setTraffic] = useState(false);
-	const [Info, setInfo] = useState(info);
+	const [Info] = useState(info);
+	const [Index, setIndex] = useState(0);
 
 	const option = {
-		center: Info[0].latlng,
+		center: Info[Index].latlng,
 		level: 3,
 	};
 
-	const markerPosition = Info[0].latlng;
-	const imageSrc = Info[0].imgUrl;
-	const imageSize = Info[0].imgSize;
-	const imageOption = Info[0].imgPos;
+	//기존 지도위치값, 마커 정보값을 Index 순서값과 연동
+	const markerPosition = Info[Index].latlng;
+	const imageSrc = Info[Index].imgUrl;
+	const imageSize = Info[Index].imgSize;
+	const imageOption = Info[Index].imgPos;
 
 	const markerImage = new kakao.maps.MarkerImage(
 		imageSrc,
@@ -38,11 +54,13 @@ function Location() {
 		image: markerImage,
 	});
 
+	//기존 컴포넌트만 처음 마운트 되었을때만 지도를 출력하는 방식에서
+	//의존성 배열에 Index를 추가해 Index값이 변경될때마다 지도 다시 출력 (갱신)
 	useEffect(() => {
 		const map_instance = new kakao.maps.Map(container.current, option);
 		marker.setMap(map_instance);
 		setLocation(map_instance);
-	}, []);
+	}, [Index]);
 
 	useEffect(() => {
 		if (!Location) return;
@@ -57,6 +75,13 @@ function Location() {
 			<button onClick={() => setTraffic(!Traffic)}>
 				{Traffic ? 'Traffic OFF' : 'Traffic ON'}
 			</button>
+
+			{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
+			<ul className='branch'>
+				<li onClick={() => setIndex(0)}>삼성동 코엑스</li>
+				<li onClick={() => setIndex(1)}>올림픽 공원</li>
+				<li onClick={() => setIndex(2)}>서울 시청</li>
+			</ul>
 		</Layout>
 	);
 }
