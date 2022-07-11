@@ -63,8 +63,8 @@ function Location() {
 		setLocation(map_instance);
 
 		//버튼 활성화
-		for (const btn of btns.current.children) btn.classList.remove('on');
-		btns.current.children[Index].classList.add('on');
+		//for (const btn of btns.current.children) btn.classList.remove('on');
+		//btns.current.children[Index].classList.add('on');
 	}, [Index]);
 
 	useEffect(() => {
@@ -84,8 +84,10 @@ function Location() {
 			{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
 			<ul className='branch' ref={btns}>
 				{Info.map((info, idx) => {
+					let on = '';
+					Index === idx ? (on = 'on') : (on = '');
 					return (
-						<li key={idx} onClick={() => setIndex(idx)}>
+						<li key={idx} onClick={() => setIndex(idx)} className={on}>
 							{info.title}
 						</li>
 					);
