@@ -55,16 +55,16 @@ function Location() {
 		image: markerImage,
 	});
 
-	//기존 컴포넌트만 처음 마운트 되었을때만 지도를 출력하는 방식에서
-	//의존성 배열에 Index를 추가해 Index값이 변경될때마다 지도 다시 출력 (갱신)
 	useEffect(() => {
+		container.current.innerHTML = '';
+
 		const map_instance = new kakao.maps.Map(container.current, option);
 		marker.setMap(map_instance);
 		setLocation(map_instance);
 
-		//버튼 활성화
-		//for (const btn of btns.current.children) btn.classList.remove('on');
-		//btns.current.children[Index].classList.add('on');
+		window.addEventListener('resize', () => {
+			map_instance.setCenter(Info[Index].latlng);
+		});
 	}, [Index]);
 
 	useEffect(() => {
@@ -82,7 +82,6 @@ function Location() {
 					{Traffic ? 'Traffic OFF' : 'Traffic ON'}
 				</button>
 
-				{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
 				<ul className='branch' ref={btns}>
 					{Info.map((info, idx) => {
 						let on = '';
