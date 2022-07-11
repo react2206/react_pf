@@ -62,9 +62,16 @@ function Location() {
 		marker.setMap(map_instance);
 		setLocation(map_instance);
 
-		window.addEventListener('resize', () => {
+		const handleResize = () => {
+			console.log('location컴포넌트에 리사이즈 이벤트 발생!!');
 			map_instance.setCenter(Info[Index].latlng);
-		});
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
 	}, [Index]);
 
 	useEffect(() => {
