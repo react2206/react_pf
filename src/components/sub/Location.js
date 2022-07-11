@@ -27,6 +27,7 @@ function Location() {
 		},
 	];
 	const container = useRef(null);
+	const btns = useRef(null);
 	const [Location, setLocation] = useState(null);
 	const [Traffic, setTraffic] = useState(false);
 	const [Info] = useState(info);
@@ -60,6 +61,10 @@ function Location() {
 		const map_instance = new kakao.maps.Map(container.current, option);
 		marker.setMap(map_instance);
 		setLocation(map_instance);
+
+		//버튼 활성화
+		for (const btn of btns.current.children) btn.classList.remove('on');
+		btns.current.children[Index].classList.add('on');
 	}, [Index]);
 
 	useEffect(() => {
@@ -77,7 +82,7 @@ function Location() {
 			</button>
 
 			{/* 각 위치버튼을 클릭할때마 Index값 변경 */}
-			<ul className='branch'>
+			<ul className='branch' ref={btns}>
 				{Info.map((info, idx) => {
 					return (
 						<li key={idx} onClick={() => setIndex(idx)}>
