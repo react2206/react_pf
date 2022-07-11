@@ -54,7 +54,7 @@ function Youtube() {
 				<Popup setOpen={setOpen}>
 					<iframe
 						src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`}
-						frameborder='0'></iframe>
+						frameBorder='0'></iframe>
 				</Popup>
 			)}
 		</>
