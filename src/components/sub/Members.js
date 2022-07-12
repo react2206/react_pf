@@ -2,12 +2,20 @@ import Layout from '../common/Layout';
 import { useState } from 'react';
 
 function Members() {
-	//userid의 입력값이 담길 초기 state를 객체로 지정
 	const initVal = {
 		userid: '',
 	};
-	//해당 객체값을 Val state에 초기값으로  저장
 	const [Val, setVal] = useState(initVal);
+
+	//현재입력하고 있는 입풋값을 state에 저장함수
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+
+		//객체에서 키값은 변수로 지정이 안됨 (es5)
+		//객체에서 키값에 변수를 치환하고자 할때는 키변수명을 대괄호로 감싸줌 (es6)
+		// [name] === 'userid'
+		setVal({ ...Val, [name]: value });
+	};
 
 	return (
 		<Layout name={'Members'}>
@@ -27,13 +35,8 @@ function Members() {
 										placeholder='아이디를 입력하세요'
 										name='userid'
 										id='userid'
-										//Val state에 있는 userid값을 input요소에 출력
 										value={Val.userid}
-										onChange={(e) => {
-											console.log(e.target.value);
-											//onChange이벤트가 발생할때마다 기존Val state값을 복사해서 현재 입력하고 있는 값으로 바꿔치기
-											setVal({ ...Val, userid: e.target.value });
-										}}
+										onChange={handleChange}
 									/>
 								</td>
 							</tr>
