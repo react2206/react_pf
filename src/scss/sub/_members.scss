@@ -1,6 +1,6 @@
 .Members {
 	figure {
-		background: lightgreen;
+		background: lightcyan;
 	}
 
 	> .inner {
@@ -45,6 +45,14 @@
 					width: 40%;
 					border: 1px solid #aaa;
 					padding: 6px 10px;
+				}
+
+				label {
+					margin-right: 6px;
+				}
+				input[type='radio'],
+				input[type='checkbox'] {
+					margin-right: 20px;
 				}
 
 				.err {

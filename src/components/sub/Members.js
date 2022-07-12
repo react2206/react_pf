@@ -7,6 +7,7 @@ function Members() {
 		pwd1: '',
 		pwd2: '',
 		email: '',
+		gender: null,
 	};
 	const [Val, setVal] = useState(initVal);
 	const [Err, setErr] = useState({});
@@ -38,12 +39,23 @@ function Members() {
 		if (value.pwd1 !== value.pwd2 || value.pwd2 < 5) {
 			errs.pwd2 = '두개의 비밀번호를 동일하게 입력하세요';
 		}
+		//gender인증처리
+		if (!Val.gender) {
+			errs.gender = '성별을 선택하세요.';
+		}
+
 		return errs;
 	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setVal({ ...Val, [name]: value });
+	};
+
+	const handleRadio = (e) => {
+		const { name } = e.target;
+		const isCheck = e.target.checked;
+		setVal({ ...Val, [name]: isCheck });
 	};
 
 	const handleSubmit = (e) => {
@@ -128,6 +140,29 @@ function Members() {
 										onChange={handleChange}
 									/>
 									<span className='err'>{Err.email}</span>
+								</td>
+							</tr>
+
+							{/* gender */}
+							<tr>
+								<th scope='row'>GENDER</th>
+								<td>
+									<label htmlFor='male'>MALE</label>
+									<input
+										type='radio'
+										id='male'
+										name='gender'
+										onChange={handleRadio}
+									/>
+
+									<label htmlFor='female'>FEMALE</label>
+									<input
+										type='radio'
+										id='female'
+										name='gender'
+										onChange={handleRadio}
+									/>
+									<span className='err'>{Err.gender}</span>
 								</td>
 							</tr>
 
