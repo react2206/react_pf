@@ -1,7 +1,9 @@
 import Layout from '../common/Layout';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Members() {
+	const history = useHistory();
 	const initVal = {
 		userid: '',
 		pwd1: '',
@@ -14,6 +16,7 @@ function Members() {
 	};
 	const [Val, setVal] = useState(initVal);
 	const [Err, setErr] = useState({});
+	const [Submit, setSubmit] = useState(false);
 
 	const check = (value) => {
 		const errs = {};
@@ -96,7 +99,14 @@ function Members() {
 	};
 
 	useEffect(() => {
-		console.log(Err);
+		//전송버튼 클릭시 에러메세지 갯수가 하나도 없고 전송버튼 클릭해서 Submit이 true이면
+		const len = Object.keys(Err).length;
+		if (len === 0 && Submit) {
+			//성공 메세지창 띄우고
+			alert('회원가입이 완료되었습니다. 메인페이지로 이동합니다.');
+			//메인페이지 루트 라우트 강제 이동
+			history.push('/youtube');
+		}
 	}, [Err]);
 
 	return (
@@ -267,7 +277,11 @@ function Members() {
 							<tr>
 								<th colSpan='2'>
 									<input type='reset' value='CANCEL' />
-									<input type='submit' value='SEND' />
+									<input
+										type='submit'
+										value='SEND'
+										onClick={() => setSubmit(true)}
+									/>
 								</th>
 							</tr>
 						</tbody>
