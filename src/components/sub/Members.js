@@ -93,6 +93,12 @@ function Members() {
 		setVal({ ...Val, [name]: isCheck });
 	};
 
+	const handleReset = () => {
+		setSubmit(false);
+		setErr({});
+		setVal(initVal);
+	};
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setErr(check(Val));
@@ -276,7 +282,7 @@ function Members() {
 							{/* btn set */}
 							<tr>
 								<th colSpan='2'>
-									<input type='reset' value='CANCEL' />
+									<input type='reset' value='CANCEL' onClick={handleReset} />
 									<input
 										type='submit'
 										value='SEND'
