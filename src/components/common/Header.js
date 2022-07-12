@@ -4,11 +4,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 function Header(props) {
 	const active = { color: 'orange' };
+	let url = '';
+	props.type === 'main'
+		? (url = process.env.PUBLIC_URL + '/img/logo_w.png')
+		: (url = process.env.PUBLIC_URL + '/img/logo_b.png');
+
 	return (
 		<header className={props.type}>
 			<div className='inner'>
 				<h1>
-					<Link to='/'>LOGO</Link>
+					<Link to='/'>
+						<img src={url} alt='logo' />
+					</Link>
 				</h1>
 
 				<ul id='gnb'>
@@ -37,11 +44,11 @@ function Header(props) {
 							Location
 						</NavLink>
 					</li>
-					<li>
+					{/* <li>
 						<NavLink to='/location2' activeStyle={active}>
 							Location2
 						</NavLink>
-					</li>
+					</li> */}
 					<li>
 						<NavLink to='/members' activeStyle={active}>
 							MemberShip

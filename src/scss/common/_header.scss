@@ -9,11 +9,14 @@ header {
 
 		h1 {
 			position: absolute;
-			bottom: 20px;
+			bottom: 10px;
 			left: 0px;
 			a {
 				font: bold 24px/1 'arial';
 				color: #fff;
+			}
+			img {
+				height: 30px;
 			}
 		}
 		#gnb {
