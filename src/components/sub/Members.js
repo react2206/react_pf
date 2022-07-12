@@ -59,9 +59,9 @@ function Members() {
 		<Layout name={'Members'}>
 			<form onSubmit={handleSubmit}>
 				<fieldset>
-					<legend>회원가입 폼 양식</legend>
+					<legend className='h'>회원가입 폼 양식</legend>
 					<table border='1'>
-						<caption>회원가입 정보입력</caption>
+						<caption className='h'>회원가입 정보입력</caption>
 						<tbody>
 							{/* userid */}
 							<tr>
@@ -134,8 +134,8 @@ function Members() {
 							{/* btn set */}
 							<tr>
 								<th colSpan='2'>
-									<input type='reset' />
-									<input type='submit' />
+									<input type='reset' value='CANCEL' />
+									<input type='submit' value='SEND' />
 								</th>
 							</tr>
 						</tbody>
