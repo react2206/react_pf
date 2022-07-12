@@ -1,30 +1,52 @@
 import Layout from '../common/Layout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Members() {
 	const initVal = {
 		userid: '',
 	};
 	const [Val, setVal] = useState(initVal);
+	//인증조건실패시 출력될 에러 메세지가 항목별로 담길 state추가
+	const [Err, setErr] = useState({});
 
-	//현재입력하고 있는 입풋값을 state에 저장함수
+	//인증처리 함수
+	const check = (value) => {
+		const errs = {};
+
+		//userid 인증처리
+		if (value.userid.length < 5) {
+			errs.userid = '아이디를 5글자 이상 입력하세요.';
+		}
+		return errs;
+	};
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-
-		//객체에서 키값은 변수로 지정이 안됨 (es5)
-		//객체에서 키값에 변수를 치환하고자 할때는 키변수명을 대괄호로 감싸줌 (es6)
-		// [name] === 'userid'
 		setVal({ ...Val, [name]: value });
 	};
 
+	//submit이벤트 발생시
+	const handleSubmit = (e) => {
+		//일단은 서버전송을 막아주고
+		e.preventDefault();
+		//check함수에 인수로 Val값을 넣어서 인증검사후
+		//반환된 에러객체값을 Err state에 옮겨담음
+		setErr(check(Val));
+	};
+
+	useEffect(() => {
+		console.log(Err);
+	}, [Err]);
+
 	return (
 		<Layout name={'Members'}>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<fieldset>
 					<legend>회원가입 폼 양식</legend>
 					<table border='1'>
 						<caption>회원가입 정보입력</caption>
 						<tbody>
+							{/* userid */}
 							<tr>
 								<th scope='row'>
 									<label htmlFor='userid'>USER ID</label>
@@ -38,7 +60,17 @@ function Members() {
 										value={Val.userid}
 										onChange={handleChange}
 									/>
+									{/* 혹시 에러가 있으면 Err정보값 화면에 출력 */}
+									<span className='err'>{Err.userid}</span>
 								</td>
+							</tr>
+
+							{/* btn set */}
+							<tr>
+								<th colSpan='2'>
+									<input type='reset' />
+									<input type='submit' />
+								</th>
 							</tr>
 						</tbody>
 					</table>
