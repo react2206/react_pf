@@ -12,12 +12,16 @@ function Community() {
 
 	const input = useRef(null);
 	const textarea = useRef(null);
+	const inputEdit = useRef(null);
+	const textareaEdit = useRef(null);
 	const [Posts, setPosts] = useState(dummyPosts);
 
 	//폼요소 초기화 함수
 	const resetForm = () => {
 		input.current.value = '';
 		textarea.current.value = '';
+		inputEdit.current.value = '';
+		textareaEdit.current.value = '';
 	};
 
 	//글저장 함수
@@ -46,6 +50,25 @@ function Community() {
 		setPosts(
 			Posts.map((post, idx) => {
 				if (idx === index) post.enableUpdate = true;
+				return post;
+			})
+		);
+	};
+
+	//실제 글 수정함수
+	const updatePost = (index) => {
+		if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
+			resetForm();
+			return alert('수정할 제목과 본문을  모두 입력하세요');
+		}
+
+		setPosts(
+			Posts.map((post, idx) => {
+				if (idx === index) {
+					post.title = inputEdit.current.value;
+					post.content = textareaEdit.current.value;
+					post.enableUpdate = false;
+				}
 				return post;
 			})
 		);
@@ -82,18 +105,23 @@ function Community() {
 								//반복도는 포스트에 enableUpdate=true값이 있으면 수정모드로 랜더링
 								<>
 									<div className='editTxt'>
-										<input type='text' defaultValue={post.title} />
+										<input
+											type='text'
+											defaultValue={post.title}
+											ref={inputEdit}
+										/>
 										<br />
 										<textarea
 											cols='30'
 											rows='4'
-											defaultValue={post.content}></textarea>
+											defaultValue={post.content}
+											ref={textareaEdit}></textarea>
 										<br />
 									</div>
 									<div className='btnSet'>
 										{/* 버튼셋도 수정취소, 수정적용으로 변경 */}
 										<button>CANCEL</button>
-										<button>UPDATE</button>
+										<button onClick={() => updatePost(idx)}>UPDATE</button>
 									</div>
 								</>
 							) : (
