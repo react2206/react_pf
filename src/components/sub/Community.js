@@ -46,8 +46,8 @@ function Community() {
 			return alert('제목과 본문을 모두 입력하세요');
 		}
 		setPosts([
-			...Posts,
 			{ title: input.current.value, content: textarea.current.value },
+			...Posts,
 		]);
 		resetForm();
 	};
@@ -103,7 +103,6 @@ function Community() {
 
 	//Posts의 값이 변경될때마다 콘솔출력
 	useEffect(() => {
-		console.log(Posts);
 		//Posts스테이트값이 변경될때마다 다시 문자열로 변환해서 로컬스토리지에 저장
 		localStorage.setItem('post', JSON.stringify(Posts));
 	}, [Posts]);
