@@ -1,8 +1,8 @@
 function Vids() {
 	return (
-		<main>
+		<section id='vids'>
 			<h1>Vids</h1>
-		</main>
+		</section>
 	);
 }
 

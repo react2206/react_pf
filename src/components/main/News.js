@@ -1,8 +1,8 @@
 function News() {
 	return (
-		<main>
+		<section id='news'>
 			<h1>News</h1>
-		</main>
+		</section>
 	);
 }
 
