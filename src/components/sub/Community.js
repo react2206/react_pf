@@ -2,9 +2,17 @@ import Layout from '../common/Layout';
 import { useRef, useState, useEffect } from 'react';
 
 function Community() {
+	const dummyPosts = [
+		{ title: 'Hello5', content: 'Here comes description  in detail.' },
+		{ title: 'Hello4', content: 'Here comes description  in detail.' },
+		{ title: 'Hello3', content: 'Here comes description  in detail.' },
+		{ title: 'Hello2', content: 'Here comes description  in detail.' },
+		{ title: 'Hello1', content: 'Here comes description  in detail.' },
+	];
+
 	const input = useRef(null);
 	const textarea = useRef(null);
-	const [Posts, setPosts] = useState([]);
+	const [Posts, setPosts] = useState(dummyPosts);
 
 	//폼요소 초기화 함수
 	const resetForm = () => {
@@ -23,6 +31,14 @@ function Community() {
 			{ title: input.current.value, content: textarea.current.value },
 		]);
 		resetForm();
+	};
+
+	//글삭제 함수
+	const deletePost = (index) => {
+		console.log(index);
+		//filter기존 배열을 복사해서 filtering (전개연산자를 쓰지 않아도 불변성 유지)
+		//파라미터로 전달된 index순번만 제외만 나머지 데이터들만 필터링해서 반환
+		setPosts(Posts.filter((post, idx) => idx !== index));
 	};
 
 	//Posts의 값이 변경될때마다 콘솔출력
@@ -52,6 +68,11 @@ function Community() {
 						<article key={idx}>
 							<h2>{post.title}</h2>
 							<p>{post.content}</p>
+
+							<div className='btnSet'>
+								<button>EDIT</button>
+								<button onClick={() => deletePost(idx)}>DELELTE</button>
+							</div>
 						</article>
 					);
 				})}
@@ -61,10 +82,3 @@ function Community() {
 }
 
 export default Community;
-
-/*
-	Create (데이터 저장 - 글저장)
-	Read (데이터 읽기 - 글읽기)
-	Update (데이터 수정 - 글수정)
-	Delete (데이터 삭제 - 글삭제)
-*/
