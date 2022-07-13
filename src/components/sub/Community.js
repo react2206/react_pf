@@ -14,7 +14,15 @@ function Community() {
 	const textarea = useRef(null);
 	const inputEdit = useRef(null);
 	const textareaEdit = useRef(null);
-	const [Posts, setPosts] = useState(dummyPosts);
+
+	//로컬스토리지에 있는 데이터를 가져와서 다시 JSON객체로 parsing해서 리턴하는 함수
+	const getLocalData = () => {
+		const data = localStorage.getItem('post');
+		return JSON.parse(data);
+	};
+
+	//초기 Posts스테이트에 로컬스토리지의 데이터를 가져와서 저장
+	const [Posts, setPosts] = useState(getLocalData());
 	const [Allowed, setAllowed] = useState(true);
 
 	//폼요소 초기화 함수
@@ -42,10 +50,9 @@ function Community() {
 
 	//글삭제 함수
 	const deletePost = (index) => {
-		console.log(index);
 		//filter기존 배열을 복사해서 filtering (전개연산자를 쓰지 않아도 불변성 유지)
 		//파라미터로 전달된 index순번만 제외만 나머지 데이터들만 필터링해서 반환
-		setPosts(Posts.filter((post, idx) => idx !== index));
+		setPosts(Posts.filter((_, idx) => idx !== index));
 	};
 
 	//글 수정모드 변경함수
@@ -93,6 +100,8 @@ function Community() {
 	//Posts의 값이 변경될때마다 콘솔출력
 	useEffect(() => {
 		console.log(Posts);
+		//Posts스테이트값이 변경될때마다 다시 문자열로 변환해서 로컬스토리지에 저장
+		localStorage.setItem('post', JSON.stringify(Posts));
 	}, [Posts]);
 
 	return (
