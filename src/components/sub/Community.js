@@ -45,8 +45,26 @@ function Community() {
 				<button onClick={resetForm}>CANCEL</button>
 				<button onClick={createPost}>WRITE</button>
 			</div>
+
+			<div className='showBox'>
+				{Posts.map((post, idx) => {
+					return (
+						<article key={idx}>
+							<h2>{post.title}</h2>
+							<p>{post.content}</p>
+						</article>
+					);
+				})}
+			</div>
 		</Layout>
 	);
 }
 
 export default Community;
+
+/*
+	Create (데이터 저장 - 글저장)
+	Read (데이터 읽기 - 글읽기)
+	Update (데이터 수정 - 글수정)
+	Delete (데이터 삭제 - 글삭제)
+*/
