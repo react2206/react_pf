@@ -41,6 +41,16 @@ function Community() {
 		setPosts(Posts.filter((post, idx) => idx !== index));
 	};
 
+	//글 수정모드 변경함수
+	const enableUpdate = (index) => {
+		setPosts(
+			Posts.map((post, idx) => {
+				if (idx === index) post.enableUpdate = true;
+				return post;
+			})
+		);
+	};
+
 	//Posts의 값이 변경될때마다 콘솔출력
 	useEffect(() => {
 		console.log(Posts);
@@ -74,7 +84,7 @@ function Community() {
 							</div>
 
 							<div className='btnSet'>
-								<button>EDIT</button>
+								<button onClick={() => enableUpdate(idx)}>EDIT</button>
 								<button onClick={() => deletePost(idx)}>DELELTE</button>
 							</div>
 						</article>
