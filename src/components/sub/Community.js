@@ -21,8 +21,10 @@ function Community() {
 	const resetForm = () => {
 		input.current.value = '';
 		textarea.current.value = '';
-		inputEdit.current.value = '';
-		textareaEdit.current.value = '';
+		if (inputEdit.current) {
+			inputEdit.current.value = '';
+			textareaEdit.current.value = '';
+		}
 	};
 
 	//글저장 함수
