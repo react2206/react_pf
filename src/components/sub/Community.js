@@ -55,6 +55,16 @@ function Community() {
 		);
 	};
 
+	//글 출력모드 변경함수
+	const disableUpdate = (index) => {
+		setPosts(
+			Posts.map((post, idx) => {
+				if (idx === index) post.enableUpdate = false;
+				return post;
+			})
+		);
+	};
+
 	//실제 글 수정함수
 	const updatePost = (index) => {
 		if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
@@ -120,7 +130,7 @@ function Community() {
 									</div>
 									<div className='btnSet'>
 										{/* 버튼셋도 수정취소, 수정적용으로 변경 */}
-										<button>CANCEL</button>
+										<button onClick={() => disableUpdate(idx)}>CANCEL</button>
 										<button onClick={() => updatePost(idx)}>UPDATE</button>
 									</div>
 								</>
