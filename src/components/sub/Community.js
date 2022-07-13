@@ -6,8 +6,20 @@ function Community() {
 	const textarea = useRef(null);
 	const [Posts, setPosts] = useState([]);
 
+	//폼요소 초기화 함수
+	const resetForm = () => {
+		input.current.value = '';
+		textarea.current.value = '';
+	};
+
 	//글저장 함수
-	const createPost = () => {};
+	const createPost = () => {
+		setPosts([
+			...Posts,
+			{ title: input.current.value, content: textarea.current.value },
+		]);
+		resetForm();
+	};
 
 	//Posts의 값이 변경될때마다 콘솔출력
 	useEffect(() => {
@@ -26,7 +38,7 @@ function Community() {
 					ref={textarea}></textarea>
 				<br />
 
-				<button>CANCEL</button>
+				<button onClick={resetForm}>CANCEL</button>
 				<button onClick={createPost}>WRITE</button>
 			</div>
 		</Layout>
