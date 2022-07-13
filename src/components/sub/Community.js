@@ -78,15 +78,38 @@ function Community() {
 				{Posts.map((post, idx) => {
 					return (
 						<article key={idx}>
-							<div className='txt'>
-								<h2>{post.title}</h2>
-								<p>{post.content}</p>
-							</div>
+							{post.enableUpdate ? (
+								//반복도는 포스트에 enableUpdate=true값이 있으면 수정모드로 랜더링
+								<>
+									<div className='editTxt'>
+										<input type='text' defaultValue={post.title} />
+										<br />
+										<textarea
+											cols='30'
+											rows='4'
+											defaultValue={post.content}></textarea>
+										<br />
+									</div>
+									<div className='btnSet'>
+										{/* 버튼셋도 수정취소, 수정적용으로 변경 */}
+										<button>CANCEL</button>
+										<button>UPDATE</button>
+									</div>
+								</>
+							) : (
+								//반복도는 포스트에 enableUpdate=true값이 없으면 일반 출력모드로 랜더링
+								<>
+									<div className='txt'>
+										<h2>{post.title}</h2>
+										<p>{post.content}</p>
+									</div>
 
-							<div className='btnSet'>
-								<button onClick={() => enableUpdate(idx)}>EDIT</button>
-								<button onClick={() => deletePost(idx)}>DELELTE</button>
-							</div>
+									<div className='btnSet'>
+										<button onClick={() => enableUpdate(idx)}>EDIT</button>
+										<button onClick={() => deletePost(idx)}>DELELTE</button>
+									</div>
+								</>
+							)}
 						</article>
 					);
 				})}
