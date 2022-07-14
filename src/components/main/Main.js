@@ -21,7 +21,7 @@ function Main() {
 	};
 
 	const activation = () => {
-		const base = -window.innerHeight / 2;
+		const base = 0;
 		const scroll = window.scrollY;
 		const btns = main.current.querySelectorAll('.scroll_navi li');
 		//현재 스크롤되는 거리값을 Scrolled state에 저장해서 관리
@@ -60,7 +60,7 @@ function Main() {
 			<Header type={'main'} />
 			<Visual />
 			<News />
-			<Pics Scrolled={Scrolled} />
+			<Pics Scrolled={Scrolled} start={pos.current[2]} />
 			<Vids />
 			<Btns setIndex={setIndex} />
 		</main>
