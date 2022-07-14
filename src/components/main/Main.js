@@ -11,28 +11,27 @@ function Main() {
 	const main = useRef(null);
 	const pos = useRef([]);
 	const [Index, setIndex] = useState(0);
-	//secs가 getPos, activation에서 모두 활용되므로 함수 밖에서 변수선언
+	const [Scrolled, setScrolled] = useState(0);
 	let secs = null;
 
 	const getPos = () => {
 		pos.current = [];
 		secs = main.current.querySelectorAll('.myScroll');
 		for (const sec of secs) pos.current.push(sec.offsetTop);
-		console.log(pos.current);
 	};
 
 	const activation = () => {
 		const base = -window.innerHeight / 2;
 		const scroll = window.scrollY;
 		const btns = main.current.querySelectorAll('.scroll_navi li');
+		//현재 스크롤되는 거리값을 Scrolled state에 저장해서 관리
+		setScrolled(scroll);
 
 		pos.current.map((pos, idx) => {
 			if (scroll >= pos + base) {
 				for (const btn of btns) btn.classList.remove('on');
-				//기존 section요소들 비활성화후
 				for (const sec of secs) sec.classList.remove('on');
 				btns[idx].classList.add('on');
-				//idx순번이 section만 다시 활성화 (기존 btns활성화와 동일)
 				secs[idx].classList.add('on');
 			}
 		});
@@ -61,7 +60,7 @@ function Main() {
 			<Header type={'main'} />
 			<Visual />
 			<News />
-			<Pics />
+			<Pics Scrolled={Scrolled} />
 			<Vids />
 			<Btns setIndex={setIndex} />
 		</main>

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 function Btns({ setIndex }) {
 	return (
 		<ul className='scroll_navi'>

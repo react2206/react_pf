@@ -84,7 +84,6 @@ function Location() {
 
 		//브라우저가 리사이즈될때마다 실행할 함수
 		const handleResize = () => {
-			console.log('location컴포넌트에 리사이즈 이벤트 발생!!');
 			//브라우저 리사이즈시 화면 가운데 마커 유지
 			map_instance.setCenter(Info[Index].latlng);
 		};
