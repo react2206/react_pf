@@ -3,5 +3,19 @@
 	height: 100vh;
 	background: #eeffc6;
 	position: relative;
-	padding: 10vw;
+	padding: 200px 0px 100px;
+
+	.swiper {
+		height: 100%;
+
+		.swiper-slide {
+			width: 100%;
+			background: #333;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font: bold 50px/1 'arial';
+			color: #fff;
+		}
+	}
 }
