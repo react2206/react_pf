@@ -13,6 +13,7 @@ function Main() {
 	const [Index, setIndex] = useState(0);
 	const [Scrolled, setScrolled] = useState(0);
 	let secs = null;
+	let base = -window.innerHeight / 2;
 
 	const getPos = () => {
 		pos.current = [];
@@ -21,7 +22,7 @@ function Main() {
 	};
 
 	const activation = () => {
-		const base = 0;
+		base = -window.innerHeight / 2;
 		const scroll = window.scrollY;
 		const btns = main.current.querySelectorAll('.scroll_navi li');
 		//현재 스크롤되는 거리값을 Scrolled state에 저장해서 관리
@@ -60,7 +61,8 @@ function Main() {
 			<Header type={'main'} />
 			<Visual />
 			<News />
-			<Pics Scrolled={Scrolled} start={pos.current[2]} />
+			{/* Scrolled:현재스크롤되는 거리값 / start값은 Pic컴포넌트의 세로 위치값을 Pic컴포넌트로 전달 */}
+			<Pics Scrolled={Scrolled} start={pos.current[2]} base={base} />
 			<Vids />
 			<Btns setIndex={setIndex} />
 		</main>
