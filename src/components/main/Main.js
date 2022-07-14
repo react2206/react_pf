@@ -11,10 +11,12 @@ function Main() {
 	const main = useRef(null);
 	const pos = useRef([]);
 	const [Index, setIndex] = useState(0);
+	//secs가 getPos, activation에서 모두 활용되므로 함수 밖에서 변수선언
+	let secs = null;
 
 	const getPos = () => {
 		pos.current = [];
-		const secs = main.current.querySelectorAll('.myScroll');
+		secs = main.current.querySelectorAll('.myScroll');
 		for (const sec of secs) pos.current.push(sec.offsetTop);
 		console.log(pos.current);
 	};
@@ -27,7 +29,11 @@ function Main() {
 		pos.current.map((pos, idx) => {
 			if (scroll >= pos + base) {
 				for (const btn of btns) btn.classList.remove('on');
+				//기존 section요소들 비활성화후
+				for (const sec of secs) sec.classList.remove('on');
 				btns[idx].classList.add('on');
+				//idx순번이 section만 다시 활성화 (기존 btns활성화와 동일)
+				secs[idx].classList.add('on');
 			}
 		});
 	};
