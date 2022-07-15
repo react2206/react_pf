@@ -28,7 +28,7 @@ function Gallery() {
 		}
 
 		await axios.get(url).then((json) => {
-			//console.log(json.data.photos.photo);
+			console.log(json.data.photos.photo);
 			//만약 검색 결과가 없다면 경고창 띄우고 종료
 			if (json.data.photos.photo.length === 0)
 				return alert('해당 검색어의 결과 이미지가 없습니다.');
@@ -120,6 +120,19 @@ function Gallery() {
 										/>
 									</div>
 									<h2>{item.title}</h2>
+									<div className='profile'>
+										<img
+											src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
+											alt={item.owner}
+											onError={(e) => {
+												e.target.setAttribute(
+													'src',
+													'https://www.flickr.com/images/buddyicon.gif'
+												);
+											}}
+										/>
+										<span>{item.owner}</span>
+									</div>
 								</div>
 							</article>
 						);
