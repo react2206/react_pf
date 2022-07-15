@@ -42,6 +42,20 @@ function Gallery() {
 		}, 1000);
 	};
 
+	const showSearch = () => {
+		const result = input.current.value;
+		input.current.value = '';
+
+		if (!EnableClick) return;
+		setEnableClick(false);
+		setLoading(true);
+		frame.current.classList.remove('on');
+		getFlickr({
+			type: 'search',
+			tags: result,
+		});
+	};
+
 	useEffect(() => {
 		getFlickr({ type: 'interest' });
 	}, []);
@@ -77,23 +91,15 @@ function Gallery() {
 			</button>
 
 			<div className='searchBox'>
-				<input type='text' ref={input} placeholder='검색어를 입력하세요.' />
-				<button
-					onClick={() => {
-						const result = input.current.value;
-						input.current.value = '';
-
-						if (!EnableClick) return;
-						setEnableClick(false);
-						setLoading(true);
-						frame.current.classList.remove('on');
-						getFlickr({
-							type: 'search',
-							tags: result,
-						});
-					}}>
-					SEARCH
-				</button>
+				<input
+					type='text'
+					ref={input}
+					placeholder='검색어를 입력하세요.'
+					onKeyUp={(e) => {
+						if (e.key === 'Enter') showSearch();
+					}}
+				/>
+				<button onClick={showSearch}>SEARCH</button>
 			</div>
 
 			<div className='frame' ref={frame}>
