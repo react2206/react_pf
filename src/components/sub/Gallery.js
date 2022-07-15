@@ -6,24 +6,12 @@ import Masonry from 'react-masonry-component';
 
 function Gallery() {
 	const frame = useRef(null);
+	const input = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
 	const [EnableClick, setEnableClick] = useState(true);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
-	/*
-	interest방식 호출
-	getFlickr({
-		type: 'interest'
-	})
-
-	search방식 호출
-	getFlickr({
-		type: 'search',
-		tags: '검색키워드'
-	})
-
-	*/
 	const getFlickr = async (opt) => {
 		const key = '4612601b324a2fe5a1f5f7402bf8d87a';
 		const method_interest = 'flickr.interestingness.getList';
@@ -87,6 +75,26 @@ function Gallery() {
 				}}>
 				Search Gallery
 			</button>
+
+			<div className='searchBox'>
+				<input type='text' ref={input} placeholder='검색어를 입력하세요.' />
+				<button
+					onClick={() => {
+						const result = input.current.value;
+						input.current.value = '';
+
+						if (!EnableClick) return;
+						setEnableClick(false);
+						setLoading(true);
+						frame.current.classList.remove('on');
+						getFlickr({
+							type: 'search',
+							tags: result,
+						});
+					}}>
+					SEARCH
+				</button>
+			</div>
 
 			<div className='frame' ref={frame}>
 				<Masonry elementType={'div'} options={masonryOptions}>
