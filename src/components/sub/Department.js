@@ -19,8 +19,16 @@ function Department() {
 				return (
 					<article key={idx}>
 						<div className='inner'>
-							<div className='pic'>
-								<img src={`${path}/img/${member.pic}`} alt={member.name} />
+							<div className='picFrame'>
+								{/* blured shadow */}
+								<div className='shadow'>
+									<img src={`${path}/img/${member.pic}`} alt={member.name} />
+								</div>
+
+								{/* pic  */}
+								<div className='pic'>
+									<img src={`${path}/img/${member.pic}`} alt={member.name} />
+								</div>
 							</div>
 							<h3>{member.name}</h3>
 							<p>{member.position}</p>

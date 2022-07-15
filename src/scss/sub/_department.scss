@@ -15,22 +15,58 @@
 			.inner {
 				width: 100%;
 
-				.pic {
+				.picFrame {
 					width: 100%;
 					height: 300px;
-					background: #111;
+					position: relative;
 					margin-bottom: 20px;
-					filter: saturate(0.2);
-					transition: 0.5s;
 
-					&:hover {
-						filter: saturate(1.1);
-					}
-
-					img {
+					.shadow {
+						position: absolute;
+						top: 0px;
+						left: 0;
 						width: 100%;
 						height: 100%;
-						object-fit: cover;
+						filter: saturate(1.6) blur(10px);
+						transform: scale(0.9);
+						opacity: 0;
+						transition: 0.5s;
+						border-radius: 20px;
+						overflow: hidden;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+						}
+					}
+
+					.pic {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						filter: saturate(0.2);
+						transition: 0.5s;
+						border-radius: 20px;
+						overflow: hidden;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+						}
+					}
+
+					&:hover {
+						.shadow {
+							opacity: 0.5;
+							top: 30px;
+						}
+						.pic {
+							filter: saturate(1.1);
+						}
 					}
 				}
 			}
