@@ -8,10 +8,10 @@ import Masonry from 'react-masonry-component';
 function Gallery() {
 	const frame = useRef(null);
 	const input = useRef(null);
+	const pop = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
 	const [EnableClick, setEnableClick] = useState(true);
-	const [Open, setOpen] = useState(false);
 	const [Index, setIndex] = useState(0);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
@@ -123,7 +123,7 @@ function Gallery() {
 										<div
 											className='pic'
 											onClick={() => {
-												setOpen(true);
+												pop.current.open();
 												setIndex(idx);
 											}}>
 											<img
@@ -163,14 +163,15 @@ function Gallery() {
 				</div>
 			</Layout>
 
-			{Open && (
-				<Popup setOpen={setOpen}>
+			<Popup ref={pop}>
+				{/* 첫 사이클에 Items는 빈배열 state이므로 두번째 싸이클시 해당 값이 있을때 img출력 */}
+				{Items.length !== 0 && (
 					<img
 						src={`https://live.staticflickr.com/${Items[Index].server}/${Items[Index].id}_${Items[Index].secret}_b.jpg`}
 						alt={Items[Index].title}
 					/>
-				</Popup>
-			)}
+				)}
+			</Popup>
 		</>
 	);
 }
