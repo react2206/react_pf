@@ -8,6 +8,7 @@ function Gallery() {
 	const frame = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
+	const [EnableClick, setEnableClick] = useState(true);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
 	const key = '4612601b324a2fe5a1f5f7402bf8d87a';
@@ -27,7 +28,11 @@ function Gallery() {
 		setTimeout(() => {
 			setLoading(false);
 			frame.current.classList.add('on');
-		}, 1000);
+
+			setTimeout(() => {
+				setEnableClick(true);
+			}, 500); //frame에 on붙고 위로 올라오는 모션시간동안 holding
+		}, 1000); //이미지호출완료되고 masonry 모션 적용 시간 holding
 	};
 
 	useEffect(() => {
@@ -44,6 +49,10 @@ function Gallery() {
 			)}
 			<button
 				onClick={() => {
+					//모션중이면 EnableClick값이 false일테니 return으로  코드종류
+					if (!EnableClick) return;
+					//그렇지 않다면 setEnableClick값을 false로 바꾸서 재이벤트 방지
+					setEnableClick(false);
 					setLoading(true);
 					frame.current.classList.remove('on');
 					getFlickr(interest_url);
@@ -53,6 +62,10 @@ function Gallery() {
 
 			<button
 				onClick={() => {
+					//모션중이면 EnableClick값이 false일테니 return으로  코드종류
+					if (!EnableClick) return;
+					//그렇지 않다면 setEnableClick값을 false로 바꾸서 재이벤트 방지
+					setEnableClick(false);
 					setLoading(true);
 					frame.current.classList.remove('on');
 					getFlickr(search_url);
