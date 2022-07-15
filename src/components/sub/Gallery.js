@@ -12,6 +12,7 @@ function Gallery() {
 	const [Loading, setLoading] = useState(true);
 	const [EnableClick, setEnableClick] = useState(true);
 	const [Open, setOpen] = useState(false);
+	const [Index, setIndex] = useState(0);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
 	const getFlickr = async (opt) => {
@@ -123,6 +124,7 @@ function Gallery() {
 											className='pic'
 											onClick={() => {
 												setOpen(true);
+												setIndex(idx);
 											}}>
 											<img
 												src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
@@ -161,7 +163,14 @@ function Gallery() {
 				</div>
 			</Layout>
 
-			{Open && <Popup setOpen={setOpen}></Popup>}
+			{Open && (
+				<Popup setOpen={setOpen}>
+					<img
+						src={`https://live.staticflickr.com/${Items[Index].server}/${Items[Index].id}_${Items[Index].secret}_b.jpg`}
+						alt={Items[Index].title}
+					/>
+				</Popup>
+			)}
 		</>
 	);
 }
