@@ -164,7 +164,6 @@ function Gallery() {
 			</Layout>
 
 			<Popup ref={pop}>
-				{/* 첫 사이클에 Items는 빈배열 state이므로 두번째 싸이클시 해당 값이 있을때 img출력 */}
 				{Items.length !== 0 && (
 					<img
 						src={`https://live.staticflickr.com/${Items[Index].server}/${Items[Index].id}_${Items[Index].secret}_b.jpg`}
