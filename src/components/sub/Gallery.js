@@ -16,6 +16,7 @@ function Gallery() {
 		const key = '4612601b324a2fe5a1f5f7402bf8d87a';
 		const method_interest = 'flickr.interestingness.getList';
 		const method_search = 'flickr.photos.search';
+		const method_user = 'flickr.people.getPhotos';
 		const num = 500;
 		let url = '';
 
@@ -26,10 +27,12 @@ function Gallery() {
 		if (opt.type === 'search') {
 			url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
 		}
+		if (opt.type === 'user') {
+			url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&user_id=${opt.user}`;
+		}
 
 		await axios.get(url).then((json) => {
 			console.log(json.data.photos.photo);
-			//만약 검색 결과가 없다면 경고창 띄우고 종료
 			if (json.data.photos.photo.length === 0)
 				return alert('해당 검색어의 결과 이미지가 없습니다.');
 			setItems(json.data.photos.photo);
@@ -131,7 +134,16 @@ function Gallery() {
 												);
 											}}
 										/>
-										<span>{item.owner}</span>
+										<span
+											onClick={(e) => {
+												if (!EnableClick) return;
+												setEnableClick(true);
+												frame.current.classList.remove('on');
+
+												getFlickr({ type: 'user', user: e.target.innerText });
+											}}>
+											{item.owner}
+										</span>
 									</div>
 								</div>
 							</article>
