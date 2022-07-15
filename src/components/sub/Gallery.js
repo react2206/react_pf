@@ -28,7 +28,10 @@ function Gallery() {
 		}
 
 		await axios.get(url).then((json) => {
-			console.log(json.data.photos.photo);
+			//console.log(json.data.photos.photo);
+			//만약 검색 결과가 없다면 경고창 띄우고 종료
+			if (json.data.photos.photo.length === 0)
+				return alert('해당 검색어의 결과 이미지가 없습니다.');
 			setItems(json.data.photos.photo);
 		});
 
@@ -43,8 +46,10 @@ function Gallery() {
 	};
 
 	const showSearch = () => {
-		const result = input.current.value;
+		const result = input.current.value.trim();
 		input.current.value = '';
+
+		if (!result) return alert('검색어를 입력하세요.');
 
 		if (!EnableClick) return;
 		setEnableClick(false);
