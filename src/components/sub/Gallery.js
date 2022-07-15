@@ -11,15 +11,34 @@ function Gallery() {
 	const [EnableClick, setEnableClick] = useState(true);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
-	const key = '4612601b324a2fe5a1f5f7402bf8d87a';
-	const method_interest = 'flickr.interestingness.getList';
-	const method_search = 'flickr.photos.search';
-	const num = 500;
-	const interest_url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
-	const search_url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${'ocean'}`;
+	/*
+	interest방식 호출
+	getFlickr({
+		type: 'interest'
+	})
 
-	//url파라미터에 따라 결과값 달라지도록 수정
-	const getFlickr = async (url) => {
+	search방식 호출
+	getFlickr({
+		type: 'search',
+		tags: '검색키워드'
+	})
+
+	*/
+	const getFlickr = async (opt) => {
+		const key = '4612601b324a2fe5a1f5f7402bf8d87a';
+		const method_interest = 'flickr.interestingness.getList';
+		const method_search = 'flickr.photos.search';
+		const num = 500;
+		let url = '';
+
+		//opt객체로 넘어온 type에 따라서 axios에 전달할 url분기처리
+		if (opt.type === 'interest') {
+			url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
+		}
+		if (opt.type === 'search') {
+			url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
+		}
+
 		await axios.get(url).then((json) => {
 			console.log(json.data.photos.photo);
 			setItems(json.data.photos.photo);
@@ -31,12 +50,12 @@ function Gallery() {
 
 			setTimeout(() => {
 				setEnableClick(true);
-			}, 500); //frame에 on붙고 위로 올라오는 모션시간동안 holding
-		}, 1000); //이미지호출완료되고 masonry 모션 적용 시간 holding
+			}, 500);
+		}, 1000);
 	};
 
 	useEffect(() => {
-		getFlickr(interest_url);
+		getFlickr({ type: 'interest' });
 	}, []);
 
 	return (
@@ -49,26 +68,22 @@ function Gallery() {
 			)}
 			<button
 				onClick={() => {
-					//모션중이면 EnableClick값이 false일테니 return으로  코드종류
 					if (!EnableClick) return;
-					//그렇지 않다면 setEnableClick값을 false로 바꾸서 재이벤트 방지
 					setEnableClick(false);
 					setLoading(true);
 					frame.current.classList.remove('on');
-					getFlickr(interest_url);
+					getFlickr({ type: 'interest' });
 				}}>
 				Interest Gallery
 			</button>
 
 			<button
 				onClick={() => {
-					//모션중이면 EnableClick값이 false일테니 return으로  코드종류
 					if (!EnableClick) return;
-					//그렇지 않다면 setEnableClick값을 false로 바꾸서 재이벤트 방지
 					setEnableClick(false);
 					setLoading(true);
 					frame.current.classList.remove('on');
-					getFlickr(search_url);
+					getFlickr({ type: 'search', tags: 'landscape' });
 				}}>
 				Search Gallery
 			</button>
