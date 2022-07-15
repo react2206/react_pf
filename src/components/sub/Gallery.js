@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
 
 function Gallery() {
+	const frame = useRef(null);
 	const key = '4612601b324a2fe5a1f5f7402bf8d87a';
 	const method_interest = 'flickr.interestingness.getList';
 	const num = 20;
@@ -18,7 +19,7 @@ function Gallery() {
 
 	return (
 		<Layout name={'Gallery'}>
-			<div className='frame'>
+			<div className='frame on' ref={frame}>
 				{Items.map((item, idx) => {
 					return (
 						<article key={idx}>
