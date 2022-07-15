@@ -7,12 +7,13 @@ import Masonry from 'react-masonry-component';
 function Gallery() {
 	const frame = useRef(null);
 	const [Items, setItems] = useState([]);
+	const [Loading, setLoading] = useState(true);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
 	const key = '4612601b324a2fe5a1f5f7402bf8d87a';
 	const method_interest = 'flickr.interestingness.getList';
 	const method_search = 'flickr.photos.search';
-	const num = 20;
+	const num = 500;
 	const interest_url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
 	const search_url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${'ocean'}`;
 
@@ -22,7 +23,11 @@ function Gallery() {
 			console.log(json.data.photos.photo);
 			setItems(json.data.photos.photo);
 		});
-		frame.current.classList.add('on');
+
+		setTimeout(() => {
+			setLoading(false);
+			frame.current.classList.add('on');
+		}, 1000);
 	};
 
 	useEffect(() => {
@@ -31,8 +36,15 @@ function Gallery() {
 
 	return (
 		<Layout name={'Gallery'}>
+			{Loading && (
+				<img
+					className='loading'
+					src={`${process.env.PUBLIC_URL}/img/loading.gif`}
+				/>
+			)}
 			<button
 				onClick={() => {
+					setLoading(true);
 					frame.current.classList.remove('on');
 					getFlickr(interest_url);
 				}}>
@@ -41,6 +53,7 @@ function Gallery() {
 
 			<button
 				onClick={() => {
+					setLoading(true);
 					frame.current.classList.remove('on');
 					getFlickr(search_url);
 				}}>
