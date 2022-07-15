@@ -28,7 +28,7 @@ function Gallery() {
 			url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
 		}
 		if (opt.type === 'user') {
-			url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&user_id=${opt.user}`;
+			url = `https://www.flickr.com/services/rest/?method=${method_user}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&user_id=${opt.user}`;
 		}
 
 		await axios.get(url).then((json) => {
@@ -65,7 +65,7 @@ function Gallery() {
 	};
 
 	useEffect(() => {
-		getFlickr({ type: 'interest' });
+		getFlickr({ type: 'user', user: '164021883@N04' });
 	}, []);
 
 	return (
@@ -93,9 +93,9 @@ function Gallery() {
 					setEnableClick(false);
 					setLoading(true);
 					frame.current.classList.remove('on');
-					getFlickr({ type: 'search', tags: 'landscape' });
+					getFlickr({ type: 'user', user: '164021883@N04' });
 				}}>
-				Search Gallery
+				My Gallery
 			</button>
 
 			<div className='searchBox'>
@@ -138,6 +138,7 @@ function Gallery() {
 											onClick={(e) => {
 												if (!EnableClick) return;
 												setEnableClick(true);
+												setLoading(true);
 												frame.current.classList.remove('on');
 
 												getFlickr({ type: 'user', user: e.target.innerText });
