@@ -2,9 +2,16 @@
 	figure {
 		width: 100%;
 		height: 300px;
-		background: #bbb;
+		background: #111;
 		opacity: 0;
 		transition: 1s;
+		position: relative;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
 	}
 	> .inner {
 		width: 1180px;
