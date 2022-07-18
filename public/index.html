@@ -12,6 +12,43 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <div class="defaults"></div>
+  <div class="mask"></div>
+
+  <script>
+    const defaults = document.querySelector('.defaults');
+    const mask = document.querySelector('.mask');
+    let tags = '';
+    const baseURL = 'https://react2206.github.io/react_pf';
+    const imgs = [
+      baseURL + '/img/Community.jpg',
+      baseURL + '/img/Department.jpg',
+      baseURL + '/img/Gallery.jpg',
+      baseURL + '/img/Location.jpg',
+      baseURL + '/img/Youtube.jpg',
+      baseURL + '/img/Members.jpg',
+    ];
+
+    const vids = [
+      baseURL + '/img/vid.mp4'
+    ];
+    const lenImg = imgs.length;
+    const lenVid = vids.length;
+
+    //DOM생성함수 호출
+    createDOM();
+
+    //DOM생성함수
+    function createDOM() {
+      imgs.forEach(src => {
+        tags += `<img src=${src} />`
+      })
+      vids.forEach(src => {
+        tags += `<video src=${src}></video>`
+      })
+      defaults.innerHTML = tags;
+    }
+  </script>
 </body>
 
 </html>
@@ -26,6 +63,10 @@
   - CSR방식 장덤 - 애초에 모든 컴포넌트를  초기에 가져오기 때문에 페이지 이동시 페이지전환 로딩이 없음
   - CSR방식 단점 - 초기로딩속도가 김, SEO에 취약
 
-
-
- -->
+  이미지, 영상 미리 SSR방식으로 캐싱처리하는 작업 흐름
+  1. 배열에 캐싱처리할 이미지와 영상의 소스 url을 각각 담아놓음
+  2. 동적으로 배열에 있는 이미지와 영상소스를 반복을 돌면서 index.html안쪽에 defaults프레임에 강제DOM생성
+  3. DOM이 index.html에 생성되는 동안 마스크화면을 대신 보여줌
+  4. 모든 영상, 이미지가 캐싱완료되면 마스크를 강제를 제거하고 캐싱을 위해 동적으로 이미지와 영상을 제거
+  5. 그사이 React컴포넌트 파일들이 리얼돔으로 변환되서 화면출력
+-->
