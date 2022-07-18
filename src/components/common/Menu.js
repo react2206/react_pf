@@ -15,7 +15,12 @@ const Menu = forwardRef((props, ref) => {
 	return (
 		<AnimatePresence>
 			{Open && (
-				<nav id='mobileGnb'>
+				<motion.nav
+					id='mobileGnb'
+					initial={{ x: -320, opacity: 0 }}
+					animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
+					exit={{ x: -320, opacity: 0 }}
+					onClick={() => setOpen(!Open)}>
 					<h1>
 						<Link to='/'>
 							<img
@@ -57,7 +62,7 @@ const Menu = forwardRef((props, ref) => {
 							</NavLink>
 						</li>
 					</ul>
-				</nav>
+				</motion.nav>
 			)}
 		</AnimatePresence>
 	);
