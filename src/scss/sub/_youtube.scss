@@ -19,6 +19,9 @@
 			display: flex;
 			flex-wrap: wrap;
 			align-content: space-between;
+			word-break: break-all;
+			//기본 값은 단어단위로 줄바꿈처리
+			//break-all을 설정하면 단어가 이어지더라도 부모넓이공간이 부족시 무조건 단어를 잘라서 줄바꿈처리
 
 			p {
 				font: 14px/1.2 'arial';

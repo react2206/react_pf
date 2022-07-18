@@ -71,3 +71,23 @@
 		}
 	}
 }
+
+@media screen and (max-width: $tablet) {
+	.Gallery {
+		.frame {
+			article {
+				width: 50%;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	.Gallery {
+		.frame {
+			article {
+				width: 100%;
+			}
+		}
+	}
+}
