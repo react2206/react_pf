@@ -31,6 +31,17 @@ function Visual() {
 		showSlide(currentEl, prev_index, -1);
 	};
 
+	const showIndex = (index) => {
+		panel_li = panel.current.children;
+		const len = panel_li.length;
+		const target_index = index;
+		const currentEl = panel.current.querySelector('.on');
+		const current_index = Array.from(panel_li).indexOf(currentEl);
+
+		if (target_index > current_index) showSlide(currentEl, target_index, 1);
+		if (target_index < current_index) showSlide(currentEl, target_index, -1);
+	};
+
 	const showSlide = (el, index, direction) => {
 		new Anime(el, {
 			prop: 'left',
@@ -66,11 +77,9 @@ function Visual() {
 			</ul>
 
 			<ul className='navi'>
-				<li className='on'></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
+				{[0, 1, 2, 3, 4].map((num) => {
+					return <li key={num} onClick={() => showIndex(num)}></li>;
+				})}
 			</ul>
 
 			<button className='prev' onClick={showPrev}>
