@@ -1,9 +1,11 @@
 import Anime from '../../asset/anim';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function Visual() {
 	const panel = useRef(null);
+	const navi = useRef(null);
 	let panel_li = null;
+	const [Index, setIndex] = useState(0);
 
 	const showNext = () => {
 		panel_li = panel.current.children;
@@ -64,7 +66,14 @@ function Visual() {
 				panel_li[index].classList.add('on');
 			},
 		});
+
+		setIndex(index);
 	};
+
+	useEffect(() => {
+		for (const el of navi.current.children) el.classList.remove('on');
+		navi.current.children[Index].classList.add('on');
+	}, [Index]);
 
 	return (
 		<figure id='visual' className='myScroll on'>
@@ -76,7 +85,7 @@ function Visual() {
 				<li className='s5'>5</li>
 			</ul>
 
-			<ul className='navi'>
+			<ul className='navi' ref={navi}>
 				{[0, 1, 2, 3, 4].map((num) => {
 					return <li key={num} onClick={() => showIndex(num)}></li>;
 				})}
