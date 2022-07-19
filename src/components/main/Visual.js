@@ -13,7 +13,7 @@ function Visual() {
 			</ul>
 
 			<ul className='navi'>
-				<li></li>
+				<li className='on'></li>
 				<li></li>
 				<li></li>
 				<li></li>
