@@ -4,10 +4,43 @@
 	background: #111;
 	position: relative;
 	z-index: 1;
+	overflow: hidden;
 
-	video {
+	.panel {
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
+		position: relative;
+
+		> li {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-size: 50px;
+			display: none;
+			justify-content: center;
+			align-items: center;
+
+			&.on {
+				display: flex;
+			}
+
+			&.s1 {
+				background: aqua;
+			}
+			&.s2 {
+				background: hotpink;
+			}
+			&.s3 {
+				background: orange;
+			}
+			&.s4 {
+				background: cornflowerblue;
+			}
+			&.s5 {
+				background: greenyellow;
+			}
+		}
 	}
 }
