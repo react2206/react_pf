@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setYoutube } from './redux/action';
+import { setYoutube, setMembers } from './redux/action';
 
 //common
 import Header from './components/common/Header';
@@ -36,8 +36,18 @@ function App() {
 		});
 	};
 
+	const fetchMembers = () => {
+		const url = process.env.PUBLIC_URL + '/DB/members.json';
+		axios.get(url).then((json) => {
+			//const action = setMembers(json.data.members);
+			//dispatch(action);
+			dispatch(setMembers(json.data.members));
+		});
+	};
+
 	useEffect(() => {
 		fetchYoutube();
+		fetchMembers();
 	}, []);
 
 	return (
