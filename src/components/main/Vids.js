@@ -1,10 +1,13 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper';
+import { useSelector } from 'react-redux';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 function Vids() {
+	const { youtube } = useSelector((store) => store.youtubeReducer);
+	console.log(youtube);
 	return (
 		<section id='vids' className='myScroll'>
 			<Swiper
@@ -17,21 +20,22 @@ function Vids() {
 				loop={true}
 				slidesPerView={3}
 				centeredSlides={true}>
-				<SwiperSlide>
-					<div className='inner'>1</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>2</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>3</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>4</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>5</div>
-				</SwiperSlide>
+				{youtube.map((vid, idx) => {
+					if (idx >= 5) return;
+					return (
+						<SwiperSlide key={idx}>
+							<div className='inner'>
+								<div className='pic'>
+									<img
+										src={vid.snippet.thumbnails.standard.url}
+										alt={vid.snippet.title}
+									/>
+								</div>
+								<h2>{vid.snippet.title}</h2>
+							</div>
+						</SwiperSlide>
+					);
+				})}
 			</Swiper>
 		</section>
 	);
