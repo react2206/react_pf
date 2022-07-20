@@ -1,4 +1,8 @@
+import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setYoutube } from './redux/action';
 
 //common
 import Header from './components/common/Header';
@@ -19,6 +23,24 @@ import Youtube from './components/sub/Youtube';
 import './scss/style.scss';
 
 function App() {
+	const dispatch = useDispatch();
+
+	const fetchYoutube = () => {
+		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
+		const playlist = 'PLHtvRFLN5v-W-izd7V4JH2L4-RTW0WRi3';
+		const num = 8;
+		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
+		axios.get(url).then((json) => {
+			console.log(json.data.items);
+			const action = setYoutube(json.data.items);
+			dispatch(action);
+		});
+	};
+
+	useEffect(() => {
+		fetchYoutube();
+	}, []);
+
 	return (
 		<>
 			<Switch>
