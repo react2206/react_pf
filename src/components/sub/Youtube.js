@@ -2,11 +2,15 @@ import Layout from '../common/Layout';
 import Popup from '../common/Popup';
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
+import { setYoutube } from '../../redux/action';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Youtube() {
+	const dispatch = useDispatch();
 	const pop = useRef(null);
-	const [Vids, setVids] = useState([]);
 	const [Index, setIndex] = useState(0);
+	const Vids = useSelector((store) => store.youtubeReducer.youtube);
+	console.log(Vids);
 
 	useEffect(() => {
 		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
@@ -14,7 +18,9 @@ function Youtube() {
 		const num = 8;
 		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
 		axios.get(url).then((json) => {
-			setVids(json.data.items);
+			console.log(json.data.items);
+			const action = setYoutube(json.data.items);
+			dispatch(action);
 		});
 	}, []);
 
