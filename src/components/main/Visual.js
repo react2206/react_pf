@@ -6,6 +6,7 @@ function Visual() {
 	const navi = useRef(null);
 	let panel_li = null;
 	const [Index, setIndex] = useState(0);
+	const [EnableClick, setEnableClick] = useState(true);
 
 	const showNext = () => {
 		panel_li = panel.current.children;
@@ -17,7 +18,7 @@ function Visual() {
 			? (next_index = current_index + 1)
 			: (next_index = 0);
 
-		showSlide(currentEl, next_index, 1);
+		if (EnableClick) showSlide(currentEl, next_index, 1);
 	};
 
 	const showPrev = () => {
@@ -30,7 +31,7 @@ function Visual() {
 			? (prev_index = current_index - 1)
 			: (prev_index = len - 1);
 
-		showSlide(currentEl, prev_index, -1);
+		if (EnableClick) showSlide(currentEl, prev_index, -1);
 	};
 
 	const showIndex = (index) => {
@@ -40,11 +41,13 @@ function Visual() {
 		const currentEl = panel.current.querySelector('.on');
 		const current_index = Array.from(panel_li).indexOf(currentEl);
 
+		if (!EnableClick) return;
 		if (target_index > current_index) showSlide(currentEl, target_index, 1);
 		if (target_index < current_index) showSlide(currentEl, target_index, -1);
 	};
 
 	const showSlide = (el, index, direction) => {
+		setEnableClick(false);
 		new Anime(el, {
 			prop: 'left',
 			value: -direction * 100 + '%',
@@ -64,6 +67,7 @@ function Visual() {
 			duration: 500,
 			callback: () => {
 				panel_li[index].classList.add('on');
+				setEnableClick(true);
 			},
 		});
 
