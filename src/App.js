@@ -19,6 +19,7 @@ import Location from './components/sub/Location';
 import Location2 from './components/sub/Location2';
 import Members from './components/sub/Members';
 import Youtube from './components/sub/Youtube';
+import Flickr from './components/sub/Flickr';
 
 import './scss/style.scss';
 
@@ -64,6 +65,7 @@ function App() {
 			<Route path='/location' component={Location} />
 			<Route path='/location2' component={Location2} />
 			<Route path='/members' component={Members} />
+			<Route path='/flickr' component={Flickr} />
 
 			<Footer />
 		</>
