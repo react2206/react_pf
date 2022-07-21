@@ -6,7 +6,7 @@ export const fetchFlickr = async (opt) => {
 	const method_interest = 'flickr.interestingness.getList';
 	const method_search = 'flickr.photos.search';
 	const method_user = 'flickr.people.getPhotos';
-	const num = 500;
+	const num = 20;
 	let url = '';
 
 	if (opt.type === 'interest') {
