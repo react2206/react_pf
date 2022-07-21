@@ -3,6 +3,7 @@ import Popup from '../common/Popup';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Masonry from 'react-masonry-component';
+import * as types from '../../redux/actionType';
 
 function Flickr() {
 	const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function Flickr() {
 	};
 
 	useEffect(() => {
-		dispatch({ type: 'FLICKR_START', Opt });
+		dispatch({ type: types.FLICKR.start, Opt });
 	}, [Opt]);
 
 	useEffect(endLoading, [flickr]);
