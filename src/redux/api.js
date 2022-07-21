@@ -21,3 +21,8 @@ export const fetchFlickr = async (opt) => {
 
 	return await axios.get(url);
 };
+
+export const fetchMembers = async () => {
+	const url = process.env.PUBLIC_URL + '/DB/members.json';
+	return await axios.get(url);
+};

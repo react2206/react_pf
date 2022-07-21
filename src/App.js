@@ -37,18 +37,9 @@ function App() {
 		});
 	};
 
-	const fetchMembers = () => {
-		const url = process.env.PUBLIC_URL + '/DB/members.json';
-		axios.get(url).then((json) => {
-			//const action = setMembers(json.data.members);
-			//dispatch(action);
-			dispatch(setMembers(json.data.members));
-		});
-	};
-
 	useEffect(() => {
 		fetchYoutube();
-		fetchMembers();
+		dispatch({ type: 'MEMBERS_START' });
 		dispatch({
 			type: 'FLICKR_START',
 			Opt: { type: 'user', user: '164021883@N04' },

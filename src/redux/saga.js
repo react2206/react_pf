@@ -1,19 +1,27 @@
 import { takeLatest, all, put, fork, call } from 'redux-saga/effects';
-import { fetchFlickr } from './api';
+import { fetchFlickr, fetchMembers } from './api';
 
-//컴포넌트에서 받은 인수값을 api.js에 있는 axios함수에 연결하는 함수
+//flickr saga설정
 export function* returnFlickr(action) {
 	const response = yield call(fetchFlickr, action.Opt);
 	console.log(response);
 	yield put({ type: 'FLICKR_SUCCESS', payload: response.data.photos.photo });
 }
-
-//요청받은 액션타입에 따라 함수호출
 export function* callFlickr() {
 	yield takeLatest('FLICKR_START', returnFlickr);
 }
 
+//members saga설정
+export function* returnMembers(action) {
+	const response = yield call(fetchMembers, action.Opt);
+	console.log(response);
+	yield put({ type: 'MEMBERS_SUCCESS', payload: response.data.members });
+}
+export function* callMembers() {
+	yield takeLatest('MEMBERS_START', returnMembers);
+}
+
 //reducer에 적용될 rootSaga생성함수
 export default function* rootSaga() {
-	yield all([fork(callFlickr)]);
+	yield all([fork(callFlickr), fork(callMembers)]);
 }
