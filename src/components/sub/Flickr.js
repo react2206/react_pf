@@ -7,9 +7,8 @@ function Flickr() {
 	const frame = useRef(null);
 	const input = useRef(null);
 	const { flickr } = useSelector((store) => store.flickrReducer);
-	const [Opt, setOpt] = useState({ type: 'interest' });
+	const [Opt, setOpt] = useState({ type: 'user', user: '164021883@N04' });
 
-	// 순서2 - showSearch함수 호출시 axios에 전달될 정보로 Opt state변경
 	const showSearch = () => {
 		const result = input.current.value.trim();
 		input.current.value = '';
@@ -21,15 +20,15 @@ function Flickr() {
 		});
 	};
 
-	//순서3 - Opt 스테이트값이 변경될떄마다 해당값을 FLICKR_START액션객체에 담아서 saga에 전달
-	//순서4 - saga.js에서 해당 액션의 Opt값을 axios함수에 적용하여 데이터 호출뒤 반환값을 리듀서를 통해 store에 저장
 	useEffect(() => {
 		dispatch({ type: 'FLICKR_START', Opt });
 	}, [Opt]);
 
 	return (
 		<Layout name={'Flickr'}>
-			{/* 순서1 - 검색어 입력후 이벤트 발생시 showSearch함수 호출 */}
+			<button onClick={() => setOpt({ type: 'interest' })}>
+				Interest Gallery
+			</button>
 			<div className='searchBox'>
 				<input
 					type='text'
@@ -54,6 +53,24 @@ function Flickr() {
 									/>
 								</div>
 								<h2>{pic.title}</h2>
+								<div className='profile'>
+									<img
+										src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+										alt={pic.owner}
+										onError={(e) => {
+											e.target.setAttribute(
+												'src',
+												'https://www.flickr.com/images/buddyicon.gif'
+											);
+										}}
+									/>
+									<span
+										onClick={(e) => {
+											setOpt({ type: 'user', user: e.target.innerText });
+										}}>
+										{pic.owner}
+									</span>
+								</div>
 							</div>
 						</article>
 					);
