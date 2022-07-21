@@ -10,28 +10,41 @@ function Flickr() {
 	const { flickr } = useSelector((store) => store.flickrReducer);
 	const [Opt, setOpt] = useState({ type: 'user', user: '164021883@N04' });
 	const [Loading, setLoading] = useState(true);
+	const [EnableClick, setEnableClick] = useState(true);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
-	//로딩바 출력하면서 기존 프레임 숨기는 함수
 	const startLoading = () => {
 		setLoading(true);
 		frame.current.classList.remove('on');
 	};
 
-	//로딩바 제거하고 다시 프레임 보이는 함수
 	const endLoading = () => {
 		setTimeout(() => {
 			frame.current.classList.add('on');
 			setLoading(false);
+			//frame에 on이 붙어서 1초동안 화면 출력 모션이 끝나면 EnableClick값을 true로 변경해서 다시 이벤트 발생가능하게 변경
+			setTimeout(() => setEnableClick(true), 1000);
 		}, 1000);
 	};
 
+	//각 핸들러 함수 호출될때
+	const showInterest = () => {
+		//EnableClick이 true가 아니면 함수 종료
+		if (!EnableClick) return;
+		//true면 false로 변경해서 재이벤트 발생 못하게 막아놓고 아래코드 실행
+		setEnableClick(false);
+
+		startLoading();
+		setOpt({ type: 'interest' });
+	};
+
 	const showSearch = () => {
+		if (!EnableClick) return;
+		setEnableClick(false);
+
 		const result = input.current.value.trim();
 		input.current.value = '';
 		if (!result) return alert('검색어를 입력하세요.');
-		//showSearch함수가 호출될떄 setOpt데이터 요청하기전
-		//startLoaing함수로 로딩화면 처리
 		startLoading();
 
 		setOpt({
@@ -40,12 +53,20 @@ function Flickr() {
 		});
 	};
 
+	const showUser = (e) => {
+		if (!EnableClick) return;
+		setEnableClick(false);
+
+		let userID = '164021883@N04';
+		e.target.innerText !== 'My Gallery' && (userID = e.target.innerText);
+		startLoading();
+		setOpt({ type: 'user', user: userID });
+	};
+
 	useEffect(() => {
 		dispatch({ type: 'FLICKR_START', Opt });
 	}, [Opt]);
 
-	//flickr state가 변경될때마다 endLoading함수 호출해서 로딩바 숨기고 화면출력
-	//flickr값이 변경된다는 의미는 store로 부터 변경요청한 비동기데이터가 로딩완료됐다는 의미
 	useEffect(endLoading, [flickr]);
 
 	return (
@@ -57,14 +78,8 @@ function Flickr() {
 				/>
 			)}
 
-			<button
-				onClick={() => {
-					//interest갤러리 버튼 클릭시 로딩바 보이기
-					startLoading();
-					setOpt({ type: 'interest' });
-				}}>
-				Interest Gallery
-			</button>
+			<button onClick={showInterest}>Interest Gallery</button>
+			<button onClick={showUser}>My Gallery</button>
 
 			<div className='searchBox'>
 				<input
@@ -102,14 +117,7 @@ function Flickr() {
 												);
 											}}
 										/>
-										<span
-											onClick={(e) => {
-												//사용자 아이디 클릭시 로딩바 보이기
-												startLoading();
-												setOpt({ type: 'user', user: e.target.innerText });
-											}}>
-											{pic.owner}
-										</span>
+										<span onClick={showUser}>{pic.owner}</span>
 									</div>
 								</div>
 							</article>
