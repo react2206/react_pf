@@ -1,0 +1,78 @@
+.Flickr {
+	.frame {
+		&::after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+
+		article {
+			width: 25%;
+			padding: 10px;
+			float: left;
+
+			.inner {
+				width: 100%;
+				padding: 10px;
+				background: #fff;
+				box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+
+				.pic {
+					width: 100%;
+					margin-bottom: 5px;
+
+					img {
+						width: 100%;
+					}
+				}
+
+				h2 {
+					font: normal 14px/1.2 'arial';
+					color: #777;
+					margin-bottom: 30px;
+				}
+
+				.profile {
+					display: flex;
+					align-items: center;
+
+					img {
+						width: 40px;
+						border-radius: 50%;
+						margin-right: 10px;
+					}
+					span {
+						color: orange;
+						cursor: pointer;
+						transition: 0.5s;
+						font-size: 12px;
+
+						&:hover {
+							color: aqua;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $tablet) {
+	.Gallery {
+		.frame {
+			article {
+				width: 50%;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	.Gallery {
+		.frame {
+			article {
+				width: 100%;
+			}
+		}
+	}
+}

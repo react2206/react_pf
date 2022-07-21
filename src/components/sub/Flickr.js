@@ -1,6 +1,7 @@
 import Layout from '../common/Layout';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Masonry from 'react-masonry-component';
 
 function Flickr() {
 	const dispatch = useDispatch();
@@ -8,6 +9,7 @@ function Flickr() {
 	const input = useRef(null);
 	const { flickr } = useSelector((store) => store.flickrReducer);
 	const [Opt, setOpt] = useState({ type: 'user', user: '164021883@N04' });
+	const masonryOptions = { transitionDuration: '0.5s' };
 
 	const showSearch = () => {
 		const result = input.current.value.trim();
@@ -42,39 +44,41 @@ function Flickr() {
 			</div>
 
 			<div className='frame' ref={frame}>
-				{flickr.map((pic, idx) => {
-					return (
-						<article key={idx}>
-							<div className='inner'>
-								<div className='pic'>
-									<img
-										src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-										alt={pic.title}
-									/>
+				<Masonry elementType={'div'} options={masonryOptions}>
+					{flickr.map((pic, idx) => {
+						return (
+							<article key={idx}>
+								<div className='inner'>
+									<div className='pic'>
+										<img
+											src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+											alt={pic.title}
+										/>
+									</div>
+									<h2>{pic.title}</h2>
+									<div className='profile'>
+										<img
+											src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+											alt={pic.owner}
+											onError={(e) => {
+												e.target.setAttribute(
+													'src',
+													'https://www.flickr.com/images/buddyicon.gif'
+												);
+											}}
+										/>
+										<span
+											onClick={(e) => {
+												setOpt({ type: 'user', user: e.target.innerText });
+											}}>
+											{pic.owner}
+										</span>
+									</div>
 								</div>
-								<h2>{pic.title}</h2>
-								<div className='profile'>
-									<img
-										src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
-										alt={pic.owner}
-										onError={(e) => {
-											e.target.setAttribute(
-												'src',
-												'https://www.flickr.com/images/buddyicon.gif'
-											);
-										}}
-									/>
-									<span
-										onClick={(e) => {
-											setOpt({ type: 'user', user: e.target.innerText });
-										}}>
-										{pic.owner}
-									</span>
-								</div>
-							</div>
-						</article>
-					);
-				})}
+							</article>
+						);
+					})}
+				</Masonry>
 			</div>
 		</Layout>
 	);
