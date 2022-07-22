@@ -4,7 +4,7 @@ import Popup from '../common/Popup';
 
 function Pics({ Scrolled, start, base }) {
 	const position = Scrolled - start - base || 0;
-	const { flickr } = useSelector((store) => store.flickrReducer);
+	const flickr = useSelector((store) => store.flickr.data);
 	const [Index, setIndex] = useState(0);
 	const pop = useRef(null);
 	const openPop = (index) => {

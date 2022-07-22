@@ -11,7 +11,7 @@ function Vids() {
 	const pop = useRef(null);
 	const swiperRef = useRef(null);
 	const [Index, setIndex] = useState(0);
-	const { youtube } = useSelector((store) => store.youtubeReducer);
+	const youtube = useSelector((store) => store.youtube.data);
 	return (
 		<>
 			<section id='vids' className='myScroll'>
@@ -40,7 +40,6 @@ function Vids() {
 										onClick={() => {
 											setIndex(idx);
 											pop.current.open();
-											//스와이퍼 컴포넌트를 참조한 다음 autoplay.stop()메서드로 특정 이벤트 발생시 자동롤링기능 제어가능
 											swiperRef.current.swiper.autoplay.stop();
 										}}>
 										<img

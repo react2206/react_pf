@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import * as types from './redux/actionType';
+import { fetchYoutube } from './redux/youtubeSlice';
+import { fetchFlickr } from './redux/flickrSlice';
 
 //common
 import Header from './components/common/Header';
@@ -27,12 +27,8 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: types.YOUTUBE.start });
-		dispatch({ type: types.MEMBERS.start });
-		dispatch({
-			type: types.FLICKR.start,
-			Opt: { type: 'user', user: '164021883@N04' },
-		});
+		dispatch(fetchYoutube());
+		dispatch(fetchFlickr({ type: 'interest' }));
 	}, []);
 
 	return (
@@ -42,7 +38,7 @@ function App() {
 				<Route path='/' render={() => <Header type={'sub'} />} />
 			</Switch>
 
-			<Route path='/department' component={Department} />
+			{/* <Route path='/department' component={Department} /> */}
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/community' component={Community} />

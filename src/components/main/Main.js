@@ -60,8 +60,7 @@ function Main() {
 		<main ref={main}>
 			<Header type={'main'} />
 			<Visual />
-			<News />
-			{/* Scrolled:현재스크롤되는 거리값 / start값은 Pic컴포넌트의 세로 위치값을 Pic컴포넌트로 전달 */}
+			{/* <News /> */}
 			<Pics Scrolled={Scrolled} start={pos.current[2]} base={base} />
 			<Vids />
 			<Btns setIndex={setIndex} />
