@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 function News() {
-	const members = useSelector((store) => store.memberReducer.members);
+	const members = useSelector((store) => store.members.data);
 	const getLocalData = () => {
 		const dummyPosts = [
 			{ title: 'Hello5', content: 'Here comes description  in detail.' },

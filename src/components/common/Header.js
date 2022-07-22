@@ -24,11 +24,11 @@ function Header(props) {
 					</h1>
 
 					<ul id='gnb'>
-						{/* <li>
+						<li>
 							<NavLink to='/department' activeStyle={active}>
 								Department
 							</NavLink>
-						</li> */}
+						</li>
 						<li>
 							<NavLink to='/flickr' activeStyle={active}>
 								Flickr
