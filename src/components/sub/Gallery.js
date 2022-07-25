@@ -11,19 +11,18 @@ function Gallery() {
 	const pop = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
-	const [EnableClick, setEnableClick] = useState(true);
 	const [Index, setIndex] = useState(0);
 	const masonryOptions = { transitionDuration: '0.5s' };
 
+	//axios 갤러리 이미지 호출 함수
 	const getFlickr = async (opt) => {
 		const key = '4612601b324a2fe5a1f5f7402bf8d87a';
 		const method_interest = 'flickr.interestingness.getList';
 		const method_search = 'flickr.photos.search';
 		const method_user = 'flickr.people.getPhotos';
-		const num = 500;
+		const num = 20;
 		let url = '';
 
-		//opt객체로 넘어온 type에 따라서 axios에 전달할 url분기처리
 		if (opt.type === 'interest') {
 			url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
 		}
@@ -35,7 +34,6 @@ function Gallery() {
 		}
 
 		await axios.get(url).then((json) => {
-			console.log(json.data.photos.photo);
 			if (json.data.photos.photo.length === 0)
 				return alert('해당 검색어의 결과 이미지가 없습니다.');
 			setItems(json.data.photos.photo);
@@ -44,27 +42,43 @@ function Gallery() {
 		setTimeout(() => {
 			setLoading(false);
 			frame.current.classList.add('on');
-
-			setTimeout(() => {
-				setEnableClick(true);
-			}, 500);
-		}, 1000);
+		}, 1000); //masonry가 적용될시간인 1초동안 지연처리
 	};
 
+	//검색 갤러리 호출 함수
 	const showSearch = () => {
 		const result = input.current.value.trim();
 		input.current.value = '';
-
 		if (!result) return alert('검색어를 입력하세요.');
 
-		if (!EnableClick) return;
-		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
+
 		getFlickr({
 			type: 'search',
 			tags: result,
 		});
+	};
+
+	//인터레스트 갤러리 호출 함수
+	const showInterest = () => {
+		setLoading(true);
+		frame.current.classList.remove('on');
+		getFlickr({ type: 'interest' });
+	};
+
+	//클릭한 사용자 아이디 갤러리 호출함수
+	const showUser = (e) => {
+		setLoading(true);
+		frame.current.classList.remove('on');
+		getFlickr({ type: 'user', user: e.target.innerText });
+	};
+
+	//내 아이디 갤러리 호출함수
+	const showMine = () => {
+		setLoading(true);
+		frame.current.classList.remove('on');
+		getFlickr({ type: 'user', user: '164021883@N04' });
 	};
 
 	useEffect(() => {
@@ -80,28 +94,11 @@ function Gallery() {
 						src={`${process.env.PUBLIC_URL}/img/loading.gif`}
 					/>
 				)}
-				<button
-					onClick={() => {
-						if (!EnableClick) return;
-						setEnableClick(false);
-						setLoading(true);
-						frame.current.classList.remove('on');
-						getFlickr({ type: 'interest' });
-					}}>
-					Interest Gallery
-				</button>
+				{/* interest, myGallery 함수호출 이벤트 */}
+				<button onClick={showInterest}>Interest Gallery</button>
+				<button onClick={showMine}>My Gallery</button>
 
-				<button
-					onClick={() => {
-						if (!EnableClick) return;
-						setEnableClick(false);
-						setLoading(true);
-						frame.current.classList.remove('on');
-						getFlickr({ type: 'user', user: '164021883@N04' });
-					}}>
-					My Gallery
-				</button>
-
+				{/* 검색갤러리 함수호출 이벤트 */}
 				<div className='searchBox'>
 					<input
 						type='text'
@@ -143,17 +140,8 @@ function Gallery() {
 													);
 												}}
 											/>
-											<span
-												onClick={(e) => {
-													if (!EnableClick) return;
-													setEnableClick(true);
-													setLoading(true);
-													frame.current.classList.remove('on');
-
-													getFlickr({ type: 'user', user: e.target.innerText });
-												}}>
-												{item.owner}
-											</span>
+											{/* 사용자아이디 갤러리 함수호출 이벤트 */}
+											<span onClick={showUser}>{item.owner}</span>
 										</div>
 									</div>
 								</article>
